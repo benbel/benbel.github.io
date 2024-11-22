@@ -75,10 +75,10 @@
     </div>
 
     <script>
-        const size = 5000;
+        const size = 25000;
         const canvas = document.createElement('canvas'); 
         canvas.width = 500; 
-        canvas.height = 1500; 
+        canvas.height = 750; 
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
         const height = canvas.height;
@@ -106,7 +106,16 @@
         const draw_points = async () => {
             const points = await generate_points();
             ctx.fillStyle = '#286c44';
-            points.forEach(([x, y]) => {
+	    const x_values = points.map(point => point[0]);
+	    const y_values = points.map(point => point[1]);
+	    const x_min = Math.min(...x_values);
+	    const x_max = Math.max(...x_values);
+	    const y_min = Math.min(...y_values);
+	    const y_max = Math.max(...y_values);
+
+            points.forEach(([x_1, y_1]) => {
+			const x = width * (x_1 - x_min) / (x_max - x_min);
+			const y = height * (y_1 - y_min) / (y_max - y_min); 
                 ctx.fillRect(x, y, 1, 1); 
             });
 
@@ -116,9 +125,6 @@
 
         // Start rendering
         draw_points();
-	draw_points();
-        draw_points();
-
     </script>
 </body>
 </html>

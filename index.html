@@ -6,19 +6,16 @@
     <style>
         body {
             margin: 0;
+	    max-width: 30em;
             font-family: monospace;
             color: #111111;
-	    background-color: #fcfcfc;
+            background-color: #fcfcfc;
             line-height: 1.75;
             font-size: 18px;
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
         }
-
-	p {
-	    max-width: 30em;
-	}
 
         .content {
             margin: 5rem;
@@ -81,7 +78,7 @@
     <script>
         const size = 25000;
         const canvas = document.createElement('canvas'); 
-        canvas.width = 500; 
+        canvas.width = 1000; 
         canvas.height = 500; 
         const ctx = canvas.getContext('2d');
         const width = canvas.width;
@@ -110,12 +107,12 @@
         const draw_points = async () => {
             const points = await generate_points();
             ctx.fillStyle = '#286c44';
-			const x_values = points.map(point => point[0]);
-			const y_values = points.map(point => point[1]);
-			const x_min = Math.min(...x_values);
-			const x_max = Math.max(...x_values);
-			const y_min = Math.min(...y_values);
-			const y_max = Math.max(...y_values);
+	    const x_values = points.map(point => point[0]);
+	    const y_values = points.map(point => point[1]);
+	    const x_min = Math.min(...x_values);
+	    const x_max = Math.max(...x_values);
+	    const y_min = Math.min(...y_values);
+	    const y_max = Math.max(...y_values);
 
             points.forEach(([x_1, y_1]) => {
 			const x = width * (x_1 - x_min) / (x_max - x_min);

@@ -4,47 +4,24 @@
     <meta charset="UTF-8">
     <title>benbel</title>
     <style>
-        body {
-            margin: 5rem auto;
-	    width: 100%;
-            font-family: monospace;
-            color: #111111;
-            background-color: #fcfcfc;
-            line-height: 1.75;
-            font-size: 16px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-        }
+    body{
+      margin: 5rem auto;
+      max-width: 30em;
+      line-height: 1.75;
+      font-size: 18px;
+      background-color: #fcfcfc;
+      color: #111111;
+      font-family: monospace;
+      }
 
-        .content {
-            margin: auto;
-	    background-color: #fcfcfc;
-	    max-width: 30em;
-        }
+    a {
+      text-decoration: none;
+      color: #286c44;
+      }
 
-        .image-container {
-            flex-grow: 1;
-            margin: auto;
-            display: flex;
-            align-items: left;
-            justify-content: left;
-        }
-
-        a {
-            text-decoration: none;
-            color: #286c44;
-        }
-
-        .image-container img {
-            max-width: 100%;
-            max-height: calc(100vh - 10rem);
-        }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 </head>
 <body>
-    <div class="content">
         <p>
             <b>Benjamin Belrhomari</b>&nbsp;
             <small><a href="https://github.com/benbel/">github</a></small> &nbsp;
@@ -72,63 +49,5 @@
             puis au <a href="https://drees.solidarites-sante.gouv.fr/">ministère des solidarités</a>,
             où j'évaluais les effets redistributifs des politiques fiscales et sociales.
         </p>
-    </div>
-
-    <div class="image-container">
-        <img id="generated-image" alt="Generated visualization">
-    </div>
-
-    <script>
-        const size = 10000;
-        const canvas = document.createElement('canvas'); 
-        canvas.width = 250; 
-        canvas.height = 250; 
-        const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
-
-        const create_model = () => {
-            const model = tf.sequential();
-            model.add(tf.layers.dense({ inputShape: [10], units: 4, activation: 'sigmoid' }));
-			model.add(tf.layers.dense({ inputShape: [10], units: 16, activation: 'sigmoid' }));
-            model.add(tf.layers.dense({ units: 2, activation: 'sigmoid' })); // Output layer
-            return model;
-        };
-
-        const model = create_model();
-
-        const generate_points = async () => {
-            const inputs = tf.randomNormal([size, 10], 0, 10); 
-            const outputs = model.predict(inputs); 
-            const points = await outputs.array(); 
-            inputs.dispose(); 
-            outputs.dispose(); 
-            return points;
-        };
-
-        // Draw points on canvas
-        const draw_points = async () => {
-            const points = await generate_points();
-            ctx.fillStyle = '#286c44';
-	    const x_values = points.map(point => point[0]);
-	    const y_values = points.map(point => point[1]);
-	    const x_min = Math.min(...x_values);
-	    const x_max = Math.max(...x_values);
-	    const y_min = Math.min(...y_values);
-	    const y_max = Math.max(...y_values);
-
-            points.forEach(([x_1, y_1]) => {
-			const x = width * (x_1 - x_min) / (x_max - x_min);
-			const y = height * (y_1 - y_min) / (y_max - y_min); 
-                ctx.fillRect(x, y, 1, 1); 
-            });
-
-            const imgElement = document.getElementById('generated-image');
-            imgElement.src = canvas.toDataURL('image/png'); 
-        };
-
-        // Start rendering
-        draw_points();
-    </script>
 </body>
 </html>

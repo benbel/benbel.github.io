@@ -2,66 +2,223 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>benbel</title>
     <style>
-    body{
-      margin: 5rem 10rem;
-      max-width: 35em;
+
+* {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;x
+      padding: 2rem;
       line-height: 1.75;
       font-size: 20px;
       background-color: #fcfcfc;
       color: #111111;
       font-family: monospace;
-      }
+    }
 
     a {
       text-decoration: none;
-      color: #111111;
-      }
+      color: #286c44;
+    }
 
     a::after {
-      vertical-align: super;
       content: '⟡';
       color: #286c44;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .header p {
+      margin: 0 0 1rem 0;
+    }
+
+    .animation-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    #c {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .text-content {
+      max-width: 35em;
+    }
+
+    .text-content p:first-child {
+      margin-top: 0;
+    }
+
+    /* Wide screen: left column (header + animation), right column (text) */
+    @media (min-width: 1100px) {
+      body {
+        padding: 3rem 5rem;
       }
 
+      .container {
+        flex-direction: row;
+        gap: 4rem;
+        align-items: flex-start;
+      }
+
+      .left-column {
+        position: sticky;
+        top: 3rem;
+        flex-shrink: 0;
+      }
+
+      .animation-container {
+        margin-bottom: 0;
+      }
+
+      .text-content {
+        flex: 1;
+        max-width: 35em;
+      }
+    }
     </style>
 </head>
 <body>
-	<p>
-		<b>Benjamin Belrhomari</b>&nbsp;
-		<small><a href="https://github.com/benbel/">github</a></small> &nbsp;
-		<small><a href="mailto:b@belrhomari.fr">contact</a></small>
-	</p>
+    <div class="container">
+        <div class="left-column">
+            <div class="header">
+                <p>
+                    <b>Benjamin Belrhomari</b>&nbsp;
+                    <small><a href="https://github.com/benbel/">github</a></small> &nbsp;
+                    <small><a href="mailto:b@belrhomari.fr">contact</a></small>
+                </p>
+            </div>
+            <div class="animation-container">
+                <canvas id="c"></canvas>
+            </div>
+        </div>
 
-	<p>
-		Je suis <i>data scientist</i> à la
-		<a href="https://www.ccomptes.fr/">Cour des comptes</a>.
-	</p>
+        <div class="text-content">
+            <p>
+                Je suis <i>data scientist</i> à la
+                <a href="https://www.ccomptes.fr/">Cour des comptes</a>.
+            </p>
 
-	<p>
-		J'ai contribué aux rapports sur 
-		le <a href="https://www.ccomptes.fr/sites/default/files/2025-11/20251118-Pacte%20Dutreil.pdf">pacte Dutreil</a>,
-		l'<a href="https://www.ccomptes.fr/fr/publications/laccompagnement-social-generaliste-dans-les-caisses-dallocations-familiales-et-les">accompagnement social</a>,
-		le <a href="https://www.ccomptes.fr/fr/publications/evaluation-du-fonds-regional-de-garantie-de-la-region-hauts-de-france">fonds de garantie dans les Hauts-de-France</a>,
-		la <a href="https://www.ccomptes.fr/fr/publications/la-politique-de-renovation-energetique-des-logements-de-la-region-occitanie">rénovation énergétique des logements en Occitanie</a>,
-		l'<a href="https://www.ccomptes.fr/fr/publications/laction-de-la-direction-generale-des-finances-publiques-aupres-du-bloc-communal">action de la DGFiP auprès du bloc communal</a>,
-		les <a href="https://www.ccomptes.fr/sites/default/files/2024-09/20240925-Droits-de-succession%C2%A0_1.pdf">droits de succession</a>,
-		et à la <a href="https://www.ccomptes.fr/sites/default/files/2024-05/20240517-certification-comptes-securite-sociale.pdf"> certification des comptes de la Sécurité sociale</a>. 
-	</p>
+            <p>
+                J'ai contribué aux rapports sur 
+                le <a href="https://www.ccomptes.fr/sites/default/files/2025-11/20251118-Pacte%20Dutreil.pdf">pacte Dutreil</a>,
+                l'<a href="https://www.ccomptes.fr/fr/publications/laccompagnement-social-generaliste-dans-les-caisses-dallocations-familiales-et-les">accompagnement social</a>,
+                le <a href="https://www.ccomptes.fr/fr/publications/evaluation-du-fonds-regional-de-garantie-de-la-region-hauts-de-france">fonds de garantie dans les Hauts-de-France</a>,
+                la <a href="https://www.ccomptes.fr/fr/publications/la-politique-de-renovation-energetique-des-logements-de-la-region-occitanie">rénovation énergétique des logements en Occitanie</a>,
+                l'<a href="https://www.ccomptes.fr/fr/publications/laction-de-la-direction-generale-des-finances-publiques-aupres-du-bloc-communal">action de la DGFiP auprès du bloc communal</a>,
+                les <a href="https://www.ccomptes.fr/sites/default/files/2024-09/20240925-Droits-de-succession%C2%A0_1.pdf">droits de succession</a>,
+                et à la <a href="https://www.ccomptes.fr/sites/default/files/2024-05/20240517-certification-comptes-securite-sociale.pdf"> certification des comptes de la Sécurité sociale</a>. 
+            </p>
 
-	<p>
-	    Je participe également à l'<a href="https://www.ccomptes.fr/fr/cour-des-comptes/international#L%E2%80%99audit%20externe%20des%20organisations%20internationales">audit des Nations Unies</a>.
-	</p>
-        
-	<p>
-		J'enseigne la programmation et l'analyse de données à l'<a href="https://www.parisschoolofeconomics.eu/">École d'économie de Paris</a>.
-	</p>
-        
-	<p>
-		Auparavant, j'étais économiste à l'<a href="https://www.ipp.eu/">Institut des politiques publiques</a>,
-		puis au <a href="https://drees.solidarites-sante.gouv.fr/">ministère des solidarités</a>,
-		où j'évaluais les effets redistributifs des politiques fiscales et sociales.
-	</p>
+            <p>
+                Je participe également à l'<a href="https://www.ccomptes.fr/fr/cour-des-comptes/international#L%E2%80%99audit%20externe%20des%20organisations%20internationales">audit des Nations Unies</a>.
+            </p>
+
+            <p>
+                J'enseigne la programmation et l'analyse de données à l'<a href="https://www.parisschoolofeconomics.eu/">École d'économie de Paris</a>.
+            </p>
+
+            <p>
+                Auparavant, j'étais économiste à l'<a href="https://www.ipp.eu/">Institut des politiques publiques</a>,
+                puis au <a href="https://drees.solidarites-sante.gouv.fr/">ministère des solidarités</a>,
+                où j'évaluais les effets redistributifs des politiques fiscales et sociales.
+            </p>
+        </div>
+    </div>
+
+<script>
+const S = 500, N = 2500, H = 5, L = 5, c = document.getElementById('c'), g = c.getContext('2d');
+c.width = c.height = S;
+
+const rn = () => Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(6.28 * Math.random()) * 2.5;
+const ns = () => (Math.random() - .5) * .2;
+const sig = v => 1 / (1 + Math.exp(-v));
+
+const makeW = () => Array(L).fill().map((_, l) => {
+  const ni = l ? H : 2, no = l < L - 1 ? H : 2;
+  return Array(no).fill().map(() => Array(ni + 1).fill().map(rn));
+});
+
+let W = makeW();
+
+const fwd = (x, y) => {
+  let a = [x + ns(), y + ns()];
+  W.forEach(wl => a = wl.map(w => sig(a.reduce((s, v, i) => s + w[i] * v, 0) + w[w.length - 1])));
+  return a;
+};
+
+const G = Math.ceil(Math.sqrt(N));
+const P = [];
+for (let i = 0; i < G; i++) for (let j = 0; j < G; j++) {
+  const sx = i / (G - 1), sy = j / (G - 1);
+  P.push({ x: sx, y: sy, vx: 0, vy: 0, tx: sx, ty: sy });
+}
+
+const compute = () => {
+  W = makeW();
+  P.forEach(p => { [p.tx, p.ty] = fwd(p.x, p.y); });
+  const minX = Math.min(...P.map(p => p.tx)), maxX = Math.max(...P.map(p => p.tx));
+  const minY = Math.min(...P.map(p => p.ty)), maxY = Math.max(...P.map(p => p.ty));
+  P.forEach(p => {
+    p.tx = (p.tx - minX) / (maxX - minX || 1);
+    p.ty = (p.ty - minY) / (maxY - minY || 1);
+  });
+};
+
+compute();
+
+const steer = 0.0001;
+const damping = 0.99;
+const maxSpeed = 0.005;
+let timer = 0;
+const interval = 100;
+
+(function draw() {
+  g.clearRect(0, 0, S, S);
+  g.fillStyle = '#286c44';
+
+  P.forEach(p => {
+    const dx = p.tx - p.x;
+    const dy = p.ty - p.y;
+
+    p.vx += dx * steer;
+    p.vy += dy * steer;
+
+    p.vx *= damping;
+    p.vy *= damping;
+
+    const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+    if (speed > maxSpeed) {
+      p.vx = (p.vx / speed) * maxSpeed;
+      p.vy = (p.vy / speed) * maxSpeed;
+    }
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    g.beginPath();
+    g.arc(p.x * S, p.y * S, 0.75, 0, 7);
+    g.fill();
+  });
+
+  if (++timer >= interval) {
+    compute();
+    timer = 0;
+  }
+
+  requestAnimationFrame(draw);
+})();
+</script>
 </body>
 </html>

@@ -27,6 +27,7 @@
 
     a::after {
       vertical-align: super;
+      font-size: 5px;
       content: '⟡';
       color: #286c44;
     }
@@ -148,7 +149,7 @@
     </div>
 
 <script>
-const S = 400, N = 1000, H = 5, L = 5, c = document.getElementById('c'), g = c.getContext('2d');
+const S = 750, N = 5000, H = 5, L = 5, c = document.getElementById('c'), g = c.getContext('2d');
 c.width = c.height = S;
 
 const rn = () => Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(6.28 * Math.random()) * 2.5;
@@ -190,9 +191,9 @@ compute();
 
 const steer = 0.0001;
 const damping = 0.99;
-const maxSpeed = 0.0025;
+const maxSpeed = 0.005;
 let timer = 0;
-const interval = 50;
+const interval = 100;
 
 (function draw() {
   g.clearRect(0, 0, S, S);

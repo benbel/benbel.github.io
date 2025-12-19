@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>benbel</title>
     <style>
-
-* {
+    * {
       box-sizing: border-box;
     }
 
     body {
-      margin: 0;x
-      padding: 2rem;
+      margin: 0;
+      padding: 3rem 2rem;
+      min-height: 100vh;
       line-height: 1.75;
       font-size: 20px;
       background-color: #fcfcfc;
@@ -22,10 +22,11 @@
 
     a {
       text-decoration: none;
-      color: #286c44;
+      color: #111111;
     }
 
     a::after {
+      vertical-align: super;
       content: '⟡';
       color: #286c44;
     }
@@ -33,7 +34,7 @@
     .container {
       display: flex;
       flex-direction: column;
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
     }
 
@@ -60,10 +61,9 @@
       margin-top: 0;
     }
 
-    /* Wide screen: left column (header + animation), right column (text) */
     @media (min-width: 1100px) {
       body {
-        padding: 3rem 5rem;
+        padding: 4rem 5rem;
       }
 
       .container {
@@ -74,7 +74,7 @@
 
       .left-column {
         position: sticky;
-        top: 3rem;
+        top: 4rem;
         flex-shrink: 0;
       }
 
@@ -85,6 +85,16 @@
       .text-content {
         flex: 1;
         max-width: 35em;
+      }
+    }
+
+    @media (min-width: 1400px) {
+      body {
+        padding: 5rem 8rem;
+      }
+
+      .left-column {
+        top: 5rem;
       }
     }
     </style>
@@ -138,7 +148,7 @@
     </div>
 
 <script>
-const S = 500, N = 2500, H = 5, L = 5, c = document.getElementById('c'), g = c.getContext('2d');
+const S = 400, N = 1000, H = 5, L = 5, c = document.getElementById('c'), g = c.getContext('2d');
 c.width = c.height = S;
 
 const rn = () => Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(6.28 * Math.random()) * 2.5;
@@ -180,9 +190,9 @@ compute();
 
 const steer = 0.0001;
 const damping = 0.99;
-const maxSpeed = 0.005;
+const maxSpeed = 0.0025;
 let timer = 0;
-const interval = 100;
+const interval = 50;
 
 (function draw() {
   g.clearRect(0, 0, S, S);

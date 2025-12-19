@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>benbel</title>
@@ -111,11 +111,13 @@
                 </p>
             </div>
             <div class="animation-container">
-                <canvas id="c"></canvas>
+                <canvas id="c" width="750" height="750"></canvas>
             </div>
         </div>
 
         <div class="text-content">
+			<br>
+			
             <p>
                 Je suis <i>data scientist</i> à la
                 <a href="https://www.ccomptes.fr/">Cour des comptes</a>.
@@ -149,87 +151,119 @@
     </div>
 
 <script>
-const S = 750, N = 5000, H = 5, L = 5, c = document.getElementById('c'), g = c.getContext('2d');
+const S = 750, N = 10000, c = document.getElementById('c'), g = c.getContext('2d');
 c.width = c.height = S;
 
-const rn = () => Math.sqrt(-2 * Math.log(Math.random())) * Math.cos(6.28 * Math.random()) * 2.5;
-const ns = () => (Math.random() - .5) * .2;
-const sig = v => 1 / (1 + Math.exp(-v));
+class Perlin3D {
+  constructor() {
 
-const makeW = () => Array(L).fill().map((_, l) => {
-  const ni = l ? H : 2, no = l < L - 1 ? H : 2;
-  return Array(no).fill().map(() => Array(ni + 1).fill().map(rn));
-});
+    const perm = [...Array(256).keys()];
+    for (let i = 255; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [perm[i], perm[j]] = [perm[j], perm[i]];
+    }
+    this.p = [...perm, ...perm];
+  }
 
-let W = makeW();
+  fade(t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+  lerp(a, b, t) { return a + t * (b - a); }
 
-const fwd = (x, y) => {
-  let a = [x + ns(), y + ns()];
-  W.forEach(wl => a = wl.map(w => sig(a.reduce((s, v, i) => s + w[i] * v, 0) + w[w.length - 1])));
-  return a;
-};
+  grad(hash, x, y, z) {
 
-const G = Math.ceil(Math.sqrt(N));
-const P = [];
-for (let i = 0; i < G; i++) for (let j = 0; j < G; j++) {
-  const sx = i / (G - 1), sy = j / (G - 1);
-  P.push({ x: sx, y: sy, vx: 0, vy: 0, tx: sx, ty: sy });
+    const h = hash & 15;
+    const u = h < 8 ? x : y;
+    const v = h < 4 ? y : (h === 12 || h === 14 ? x : z);
+    return ((h & 1) ? -u : u) + ((h & 2) ? -v : v);
+  }
+
+  noise(x, y, z) {
+    const X = Math.floor(x) & 255;
+    const Y = Math.floor(y) & 255;
+    const Z = Math.floor(z) & 255;
+
+    x -= Math.floor(x);
+    y -= Math.floor(y);
+    z -= Math.floor(z);
+
+    const u = this.fade(x);
+    const v = this.fade(y);
+    const w = this.fade(z);
+
+    const A  = this.p[X] + Y;
+    const AA = this.p[A] + Z;
+    const AB = this.p[A + 1] + Z;
+    const B  = this.p[X + 1] + Y;
+    const BA = this.p[B] + Z;
+    const BB = this.p[B + 1] + Z;
+
+    return this.lerp(
+      this.lerp(
+        this.lerp(this.grad(this.p[AA], x, y, z), this.grad(this.p[BA], x-1, y, z), u),
+        this.lerp(this.grad(this.p[AB], x, y-1, z), this.grad(this.p[BB], x-1, y-1, z), u),
+        v
+      ),
+      this.lerp(
+        this.lerp(this.grad(this.p[AA+1], x, y, z-1), this.grad(this.p[BA+1], x-1, y, z-1), u),
+        this.lerp(this.grad(this.p[AB+1], x, y-1, z-1), this.grad(this.p[BB+1], x-1, y-1, z-1), u),
+        v
+      ),
+      w
+    );
+  }
 }
 
-const compute = () => {
-  W = makeW();
-  P.forEach(p => { [p.tx, p.ty] = fwd(p.x, p.y); });
-  const minX = Math.min(...P.map(p => p.tx)), maxX = Math.max(...P.map(p => p.tx));
-  const minY = Math.min(...P.map(p => p.ty)), maxY = Math.max(...P.map(p => p.ty));
-  P.forEach(p => {
-    p.tx = (p.tx - minX) / (maxX - minX || 1);
-    p.ty = (p.ty - minY) / (maxY - minY || 1);
-  });
-};
+const perlin = new Perlin3D();
 
-compute();
+const scale = 0.15; 
+const timeScale = 0.005; 
 
-const steer = 0.0001;
-const damping = 0.99;
-const maxSpeed = 0.005;
-let timer = 0;
-const interval = 100;
+const P = Array.from({ length: N }, () => ({
+  x: Math.random(),
+  y: Math.random(),
+  vx: 0,
+  vy: 0
+}));
 
-(function draw() {
-  g.clearRect(0, 0, S, S);
+let time = 0;
+
+function draw() {
+  g.fillStyle = 'rgba(255, 255, 255, 0.03)';
+  g.fillRect(0, 0, S, S);
+
   g.fillStyle = '#286c44';
 
   P.forEach(p => {
-    const dx = p.tx - p.x;
-    const dy = p.ty - p.y;
+    const eps = 0.0001;
+    const nx = p.x / scale;
+    const ny = p.y / scale;
 
-    p.vx += dx * steer;
-    p.vy += dy * steer;
+    const n1 = perlin.noise(nx, (p.y + eps) / scale, time);
+    const n2 = perlin.noise(nx, (p.y - eps) / scale, time);
+    const n3 = perlin.noise((p.x + eps) / scale, ny, time);
+    const n4 = perlin.noise((p.x - eps) / scale, ny, time);
 
-    p.vx *= damping;
-    p.vy *= damping;
+    const fx = (n1 - n2) / (2 * eps); 
+    const fy = -(n3 - n4) / (2 * eps);
 
-    const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-    if (speed > maxSpeed) {
-      p.vx = (p.vx / speed) * maxSpeed;
-      p.vy = (p.vy / speed) * maxSpeed;
-    }
+    p.vx += (fx - p.vx) * 0.1;
+    p.vy += (fy - p.vy) * 0.1;
 
-    p.x += p.vx;
-    p.y += p.vy;
+    p.x += p.vx * 0.001;
+    p.y += p.vy * 0.001;
+
+    if (p.x < 0) p.x += 1; if (p.x > 1) p.x -= 1;
+    if (p.y < 0) p.y += 1; if (p.y > 1) p.y -= 1;
 
     g.beginPath();
-    g.arc(p.x * S, p.y * S, 0.75, 0, 7);
+    g.arc(p.x * S, p.y * S, 0.5, 0, 5);
     g.fill();
   });
 
-  if (++timer >= interval) {
-    compute();
-    timer = 0;
-  }
-
+  time += timeScale;
   requestAnimationFrame(draw);
-})();
+}
+
+draw();
 </script>
-</body>
-</html>
+
+</body></html>

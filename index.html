@@ -2,79 +2,185 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Benjamin Belrhomari</title>
+
   <style>
     body {
-      margin: 5rem 10rem;
-      max-width: 30em;
+      margin: 5rem auto;
+      max-width: 45em;
       line-height: 1.75;
       font-size: 16px;
       background-color: #fcfcfc;
       color: #111111;
       font-family: monospace;
     }
+
     a {
+      color: #286c44;
       text-decoration: none;
-      color: #286c44;
     }
+
     a::after {
-      vertical-align: super;
-      font-size: 10px;
-      content: '⟡';
+      content: "⟡";
       color: #286c44;
+      font-size: 10px;
+      vertical-align: super;
     }
+
+    details {
+      display: inline;
+    }
+
+    details summary {
+      display: inline;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details summary::marker {
+      display: none;
+    }
+
+    details summary::after {
+      content: "[+]";
+      margin-left: 0.5em;
+    }
+
+    details ul {
+      display: block;
+      margin-top: 1em;
+    }
+
     ul {
       list-style: none;
       padding-left: 1em;
     }
+
     li {
       margin-bottom: 0.3em;
     }
+
     li::before {
       content: "› ";
       margin-left: -1em;
     }
+
+    @media (max-width:  em) {
+      body {
+        margin: 2rem;
+      }
+    }
   </style>
 </head>
+
 <body>
   <p>
     <b>Benjamin Belrhomari</b>&nbsp;
-    <small><a href="https://github.com/benbel/">github</a></small>
+    <small>
+      <a href="https://github.com/benbel/">github</a>
+    </small>
     &nbsp;
-    <small><a href="mailto:b@belrhomari.fr">contact</a></small>
+    <small>
+      <a href="mailto:b@belrhomari.fr">contact</a>
+    </small>
   </p>
-  <p>
-    Je suis <i>data scientist</i> à la
-    <a href="https://www.ccomptes.fr/">Cour des comptes</a>,
-    où j'ai contribué à plusieurs rapports :
+
+  <p>    <details>
+<summary>
+    Je suis <a href="https://www.insee.fr/fr/information/9002036?sommaire=9002040"><i>data scientist</i> à la
+    Cour des comptes</a>,
+      où j'ai contribué à plusieurs rapports notamment sur l'économie et l'environnement.</summary>
+      <ul>
+        <li>
+          <a href="https://www.ccomptes.fr/fr/publications/la-police-environnementale-de-leau">
+            police environnementale de l'eau
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/fr/publications/les-aides-la-decarbonation-de-lindustrie-du-plan-de-relance-et-de-france-2030">
+            aides à la décarbonation de l'industrie
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/sites/default/files/2025-11/20251118-Pacte%20Dutreil.pdf">
+            pacte Dutreil
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/fr/publications/laccompagnement-social-generaliste-dans-les-caisses-dallocations-familiales-et-les">
+            accompagnement social dans les CAF
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/fr/publications/evaluation-du-fonds-regional-de-garantie-de-la-region-hauts-de-france">
+            fonds de garantie des Hauts-de-France
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/fr/publications/la-politique-de-renovation-energetique-des-logements-de-la-region-occitanie">
+            rénovation énergétique des logements en Occitanie
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/fr/publications/laction-de-la-direction-generale-des-finances-publiques-aupres-du-bloc-communal">
+            action de la DGFiP auprès du bloc communal
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/sites/default/files/2024-09/20240925-Droits-de-succession%C2%A0_1.pdf">
+            droits de succession
+          </a>
+        </li>
+        <li>
+          <a href="https://www.ccomptes.fr/sites/default/files/2024-05/20240517-certification-comptes-securite-sociale.pdf">
+            certification des comptes de la Sécurité sociale
+          </a>
+        </li>
+      </ul>
+    </details>
   </p>
-  <ul>
-    <li><a href="https://www.ccomptes.fr/fr/publications/la-police-environnementale-de-leau">police environnementale de l'eau</a></li>
-    <li><a href="https://www.ccomptes.fr/fr/publications/les-aides-la-decarbonation-de-lindustrie-du-plan-de-relance-et-de-france-2030">aides à la décarbonation de l'industrie</a></li>
-    <li><a href="https://www.ccomptes.fr/sites/default/files/2025-11/20251118-Pacte%20Dutreil.pdf">pacte Dutreil</a></li>
-    <li><a href="https://www.ccomptes.fr/fr/publications/laccompagnement-social-generaliste-dans-les-caisses-dallocations-familiales-et-les">accompagnement social dans les CAF</a></li>
-    <li><a href="https://www.ccomptes.fr/fr/publications/evaluation-du-fonds-regional-de-garantie-de-la-region-hauts-de-france">fonds de garantie des Hauts-de-France</a></li>
-    <li><a href="https://www.ccomptes.fr/fr/publications/la-politique-de-renovation-energetique-des-logements-de-la-region-occitanie">rénovation énergétique des logements en Occitanie</a></li>
-    <li><a href="https://www.ccomptes.fr/fr/publications/laction-de-la-direction-generale-des-finances-publiques-aupres-du-bloc-communal">action de la DGFiP auprès du bloc communal</a></li>
-    <li><a href="https://www.ccomptes.fr/sites/default/files/2024-09/20240925-Droits-de-succession%C2%A0_1.pdf">droits de succession</a></li>
-    <li><a href="https://www.ccomptes.fr/sites/default/files/2024-05/20240517-certification-comptes-securite-sociale.pdf">certification des comptes de la Sécurité sociale</a></li>
-  </ul>
+
   <p>
     Je participe également à l'<a href="https://www.ccomptes.fr/fr/cour-des-comptes/international#L%E2%80%99audit%20externe%20des%20organisations%20internationales">audit des Nations Unies</a>
     au siège, à Madagascar et au Népal.
   </p>
+
   <p>
-    J'enseigne la programmation et l'analyse de données à l'<a href="https://www.parisschoolofeconomics.eu/">École d'économie de Paris</a> :
+    <details>
+      <summary>
+      J'enseigne la programmation et l'analyse de données à l'
+    <a href="https://www.parisschoolofeconomics.eu/">
+      École d'économie de Paris</a>.</summary>
+      <ul>
+        <li>
+          <a href="/cours/geographic_data_manipulation.html">
+            manipulation de données géographiques
+          </a>
+        </li>
+        <li>
+          <a href="/cours/spatial_statistics.html">
+            statistiques et économétrie spatiales
+          </a>
+        </li>
+        <li>
+          <a href="/cours/nlp.html">
+            NLP
+          </a>
+        </li>
+      </ul>
+    </details>
   </p>
-  <ul>
-    <li><a href="/cours/geographic_data_manipulation.html">manipulation de données géographiques</a></li>
-    <li><a href="/cours/spatial_statistics.html">statistiques et économétrie spatiales</a></li>
-    <li><a href="/cours/nlp.html">NLP</a></li>
-  </ul>
-  
+
   <p>
-    Auparavant, j'étais économiste à l'<a href="https://www.ipp.eu/">Institut des politiques publiques</a>,
-    puis au <a href="https://drees.solidarites-sante.gouv.fr/">ministère des solidarités</a>,
+    Auparavant, j'étais économiste à l'<a href="https://www.ipp.eu/">
+      Institut des politiques publiques</a>,
+    puis au
+    <a href="https://drees.solidarites-sante.gouv.fr/">ministère des solidarités</a>,
     où j'évaluais les effets redistributifs des politiques fiscales et sociales.
   </p>
 </body>
